@@ -23,7 +23,7 @@ As this application uses .NET Core 3.1, the runtime **must** be installed on you
 
 1. Download a release of VU.Server, or build it yourself using the instructions below.
 2. Extract the `vuserver-win64.zip` or `vuserver-linux64.zip` to a folder
-3. Run `VU.Server.exe` (Windows) or `VU.Server` (Linux) with the flags you would when running the VU server directly with the addition of the `-vupath` argument, pointing to the installation directory of VU. This argument does not have to be provided if you extracted `VU.Server` in the VU directory.
+3. Run `VU.Server.exe` (Windows) or `VU.Server` (Linux) with the flags you would when running the VU server directly with the addition of the `-vupath` argument, pointing to the installation directory of VU. This argument does not have to be provided if you extracted VU.Server in the VU directory.
 
 Example: `./VU.Server.exe -vupath "C:\Venice Unleashed\" -serverInstancePath "C:\VU_Server1"`
 

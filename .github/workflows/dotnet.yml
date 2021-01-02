@@ -4,7 +4,7 @@ on:
   push:
     # Sequence of patterns matched against refs/tags
     tags:
-    - 'v*' # Push events to matching release/v*, i.e. release/v1.0, release/v20.15.10
+    - 'v*' # Push events to matching v*, i.e. v1.0, v20.15.10
 
 jobs:
   build:
@@ -40,12 +40,34 @@ jobs:
         zip -r build/vuserver-win64.zip build/Release/Windows
         zip -r build/vuserver-linux64.zip build/Release/Linux
 
-    # Create github release and publish artifacts
-    - uses: "marvinpinto/action-automatic-releases@v1.1.0"
+    # Create github release and publish zip files
+    - name: Create Release
+      id: create_release
+      uses: actions/create-release@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
-        repo_token: "${{ secrets.GITHUB_TOKEN }}"
-        title: Release ${{ github.ref }}
-        files: |
-          README.md
-          build/vuserver-win64.zip
-          build/vuserver-linux64.zip
+        tag_name: ${{ github.ref }}
+        release_name: Release ${{ github.ref }}
+        draft: false
+        prerelease: false
+
+    - name: Upload Release Asset (Windows)
+      uses: actions/upload-release-asset@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        upload_url: ${{ steps.create_release.outputs.upload_url }} 
+        asset_path: ./build/vuserver-win64.zip
+        asset_name: vuserver-win64.zip
+        asset_content_type: application/zip
+
+    - name: Upload Release Asset (Linux)
+      uses: actions/upload-release-asset@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        upload_url: ${{ steps.create_release.outputs.upload_url }} 
+        asset_path: ./build/vuserver-linux64.zip
+        asset_name: vuserver-linux64.zip
+        asset_content_type: application/zip
