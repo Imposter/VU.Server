@@ -1,0 +1,3 @@
+[submodule "External/Rcon.Net"]
+	path = External/Rcon.Net
+	url = https://github.com/Imposter/Rcon.Net
