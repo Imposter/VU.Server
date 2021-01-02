@@ -10,7 +10,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\External\net-rcon\Rcon.Net\Rcon.Net.csproj" />
+    <ProjectReference Include="..\External\Rcon.Net\Rcon.Net\Rcon.Net.csproj" />
   </ItemGroup>
 
 </Project>
