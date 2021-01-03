@@ -8,14 +8,19 @@ This project is a wrapper around the original [Venice Unleashed](https://veniceu
 - [x] Support for console input (through RCON)
 - [ ] Server state information
   - [ ] FPS
-  - [ ] Player Count
-  - [ ] Game Mode
-  - [ ] Map
+  - [x] Player Count
+  - [x] Game Mode
+  - [x] Map
 - [ ] System information
   - [ ] Core frequency
   - [ ] Core load
   - [ ] Memory usage
   - [ ] Network usage
+- [ ] Process Affinity
+- [ ] Logging of system and server information to CSV files for analysis
+  - [ ] CPU Core Frequency
+  - [ ] CPU Core Load
+  - [ ] Memory Usage
 
 ## Usage
 
@@ -23,9 +28,28 @@ As this application uses .NET Core 3.1, the runtime **must** be installed on you
 
 1. Download a release of VU.Server, or build it yourself using the instructions below.
 2. Extract the `vuserver-win64.zip` or `vuserver-linux64.zip` to a folder
-3. Run `VU.Server.exe` (Windows) or `VU.Server` (Linux) with the flags you would when running the VU server directly with the addition of the `-vupath` argument, pointing to the installation directory of VU. This argument does not have to be provided if you extracted VU.Server in the VU directory.
+3. Run `VU.Server.exe` (Windows) or `VU.Server` (Linux) with the following flags.
 
-Example: `./VU.Server.exe -vupath "C:\Venice Unleashed\" -serverInstancePath "C:\VU_Server1"`
+| Argument                  | Default                                  | Description                                                                              |
+|---------------------------|------------------------------------------|------------------------------------------------------------------------------------------|
+| `--path`                  | (Required)                               | Path to Venice Unleashed
+| `--instance`              | (Required)                               | Path to VU server instance
+| `--gamepath`              |                                          | Path to Battlefield 3 game files
+| `--gameport`              | 25200                                    | Set VU server game port
+| `--harmonyport`           | 7948                                     | Set VU server harmony port
+| `--remoteport`            | 47200                                    | Set VU server remote port
+| `--frequency`             | Default30 [ Default30, High60, High120 ] | Set VU server frequency
+| `--unlisted`              | false                                    | Prevent VU server from being visible on the server list
+| `--noupdate`              | false                                    | Prevent automatic updates from restarting the server
+| `--highresterrain`        | false                                    | Enables high resolution terrain. Useful for extending maps beyond their original play area
+| `--disableterraininterop` | false                                    | Disables interpolation between different terrain LODs
+| `--skipchecksum`          | false                                    | Disables level checksum validation on client connection
+| `--perftrace`             | false                                    | Prevent automatic updates from restarting the server
+| `--env`                   | prod [ prod, dev ]                       | Specifies the Zeus environment to connect to. Defaults to prod
+| `--tracedc`               | false                                    | Traces DataContainer usage in VEXT and prints any dangling DCs during level destruction
+| `--trace`                 | false                                    | Enables verbose logging
+
+Example: `./VU.Server.exe --path "C:\Venice Unleashed\" --instance "C:\VU_Server1"`
 
 ## Building
 
@@ -36,6 +60,7 @@ To build the application, you need the .NET Core 3.1 SDK. You can get it [here](
 3. Run `dotnet build` to build the application
 
 ## Disclaimer
+
 THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
 EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
 MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.

@@ -7,6 +7,16 @@ namespace VU.Server
     {
         public const int LOG_LIMIT = 256;
 
+        // Server Info
+        private FrameView _serverInfoFrameView;
+        private Label _upTimeLabel;
+        private Label _fpsLabel;
+        private Label _stateLabel;
+        private Label _playersLabel;
+        private Label _mapLabel;
+        private Label _modeLabel;
+
+        // Logging/Input
         private ListView _logsListView;
         private TextField _inputTextField;
         private List<string> _logList;
@@ -15,9 +25,25 @@ namespace VU.Server
 
         public void CreateUserInterface()
         {
-            // Create UI elements
+            // Create server info labels
+            _serverInfoFrameView = new FrameView { Width = Dim.Fill(), Height = 8 };
+            _upTimeLabel = new Label { Y = 0, Width = Dim.Fill(), Height = 1 };
+            _fpsLabel = new Label { Y = 1, Width = Dim.Fill(), Height = 1 };
+            _stateLabel = new Label { Y = 2, Width = Dim.Fill(), Height = 1 };
+            _playersLabel = new Label { Y = 3, Width = Dim.Fill(), Height = 1 };
+            _mapLabel = new Label { Y = 4, Width = Dim.Fill(), Height = 1 };
+            _modeLabel = new Label { Y = 5, Width = Dim.Fill(), Height = 1 };
+
+            _serverInfoFrameView.Add(_upTimeLabel);
+            _serverInfoFrameView.Add(_fpsLabel);
+            _serverInfoFrameView.Add(_stateLabel);
+            _serverInfoFrameView.Add(_playersLabel);
+            _serverInfoFrameView.Add(_mapLabel);
+            _serverInfoFrameView.Add(_modeLabel);
+
+            // Create logging/input elements
             _logList = new List<string>();
-            _logsListView = new ListView { X = 0, Y = 0, Width = Dim.Fill(), Height = Dim.Fill(1) };
+            _logsListView = new ListView { X = 0, Y = 8, Width = Dim.Fill(), Height = Dim.Fill(1) };
             _logsListView.SelectedItemChanged += LogsListView_SelectedItemChanged;
             _logsListView.SetSource(_logList);
             _logSelectedIndex = 0;
@@ -26,6 +52,7 @@ namespace VU.Server
             _inputTextField = new TextField { X = 0, Y = Pos.AnchorEnd(1), Width = Dim.Fill(), Height = 1 };
             _inputTextField.EnsureFocus();
 
+            Add(_serverInfoFrameView);
             Add(_logsListView);
             Add(_inputTextField);
         }

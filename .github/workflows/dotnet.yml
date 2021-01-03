@@ -30,14 +30,14 @@ jobs:
     - name: Test
       run: dotnet test --no-build --verbosity normal
     - name: Publish (Windows)
-      run: dotnet publish --configuration Release --output build/Release/Windows --self-contained false --runtime win-x64
+      run: dotnet publish --configuration Release --output build/Release/Windows --self-contained false --runtime win-x86
     - name: Publish (Linux)
       run: dotnet publish --configuration Release --output build/Release/Linux --self-contained false --runtime linux-x64
 
     # Create zip from artifacts
     - name: Package
       run: |
-        zip -r build/vuserver-win64.zip build/Release/Windows
+        zip -r build/vuserver-win32.zip build/Release/Windows
         zip -r build/vuserver-linux64.zip build/Release/Linux
 
     # Create github release and publish zip files
@@ -58,8 +58,8 @@ jobs:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
         upload_url: ${{ steps.create_release.outputs.upload_url }} 
-        asset_path: ./build/vuserver-win64.zip
-        asset_name: vuserver-win64.zip
+        asset_path: build/vuserver-win32.zip
+        asset_name: vuserver-win32.zip
         asset_content_type: application/zip
 
     - name: Upload Release Asset (Linux)
@@ -68,6 +68,6 @@ jobs:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
         upload_url: ${{ steps.create_release.outputs.upload_url }} 
-        asset_path: ./build/vuserver-linux64.zip
+        asset_path: build/vuserver-linux64.zip
         asset_name: vuserver-linux64.zip
         asset_content_type: application/zip
