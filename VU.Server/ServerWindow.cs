@@ -122,7 +122,9 @@ namespace VU.Server
             }
             catch (Exception ex)
             {
-                WriteToLog($"[Console] RCON: {ex}");
+                WriteToLog($"[Console] RCON: {ex.Message}");
+
+                // TODO: Write verbose details to log file
             }
         }
 

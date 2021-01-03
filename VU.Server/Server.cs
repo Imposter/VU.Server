@@ -14,7 +14,7 @@ namespace VU.Server
     {
         #region Constants and Variables
 
-        private const int RefreshFrequency = 1; // Hz
+        private const int REFRESH_FREQUENCY = 1; // Hz
 
         // Command line options
         private readonly Options _options;
@@ -84,14 +84,30 @@ namespace VU.Server
             _rconClient.WordsReceived += RconClient_WordsReceived;
             _rconPassword = _config["admin.password"];
 
+            // TODO: Run WINE for Linux
+
             // Start the server in headless mode and redirect it's output
             _process = new Process();
+#if WINDOWS
             _process.StartInfo.FileName = Path.Combine(_options.VeniceUnleashedPath, "vu.exe");
+#elif LINUX
+            // If we're running under linux, we need to use wine
+            _process.StartInfo.FileName = "wine";
+#else
+#error Unsupported platform!
+#endif
             _process.StartInfo.WorkingDirectory = _options.VeniceUnleashedPath;
             _process.StartInfo.CreateNoWindow = false;
             _process.StartInfo.RedirectStandardOutput = true;
             _process.StartInfo.RedirectStandardError = true;
-            _process.StartInfo.Arguments = "-server -dedicated -headless";
+
+#if LINUX
+            // Set path to VU
+            _process.StartInfo.Arguments = Path.Combine(_options.VeniceUnleashedPath, "vu.com");
+#endif
+
+            // Set required console flags
+            _process.StartInfo.Arguments += " -server -dedicated -headless";
 
             // Set instance path
             _process.StartInfo.Arguments += $" -serverInstancePath \"{_options.InstancePath}\"";
@@ -183,7 +199,7 @@ namespace VU.Server
 
                 Refreshed?.Invoke();
 
-                Thread.Sleep(1000 / RefreshFrequency);
+                Thread.Sleep(1000 / REFRESH_FREQUENCY);
             }
 
             // Reset vars
