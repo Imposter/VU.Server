@@ -1,6 +1,6 @@
 # VU.Server
 
-This project is a wrapper around the original [Venice Unleashed](https://veniceunleashed.net) server and provides additional functionality. This application utilizes .NET Core 3.1 and works on both Windows and Linux.
+This project is a wrapper around the original [Venice Unleashed](https://veniceunleashed.net) server and provides additional functionality. This application utilizes .NET Core 3.1 and currently only works on Windows.
 
 ## Functionality
 
@@ -27,8 +27,8 @@ This project is a wrapper around the original [Venice Unleashed](https://veniceu
 As this application uses .NET Core 3.1, the runtime **must** be installed on your system. You can follow your platform-specific instructions [here](https://dotnet.microsoft.com/download/dotnet-core/3.1) on Microsoft's website.
 
 1. Download a release of VU.Server, or build it yourself using the instructions below.
-2. Extract the `vuserver-win64.zip` or `vuserver-linux64.zip` to a folder
-3. Run `VU.Server.exe` (Windows) or `VU.Server` (Linux) with the following flags.
+2. Extract the `vuserver-win64.zip`.
+3. Run `VU.Server.exe` with the following flags.
 
 | Argument                  | Default                                  | Description                                                                              |
 |---------------------------|------------------------------------------|------------------------------------------------------------------------------------------|
